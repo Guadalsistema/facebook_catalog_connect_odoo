@@ -7,7 +7,7 @@ services:
       - db
     ports:
       - "8069:8069"
-    command: ["--dev=all"]
+    command: ["--dev=all", "--test-enable"]
     volumes:
       - ./odoo:/etc/odoo:ro
       - ./extra-addons:/mnt/extra-addons:ro

@@ -1,6 +1,6 @@
 {
-    "name": "Llevoxti restaurante",
-    'summary': 'Facebook catalog connection',
+    "name": "Facebook catalog connection",
+    'summary': 'Facebook catalog connection to odoo using csv feed',
     "version": "13.0.0.1",
     "author": "Juan Vázquez Moreno <vmjuan90@gmail.com>",
     "website": "guadalsistema.com",

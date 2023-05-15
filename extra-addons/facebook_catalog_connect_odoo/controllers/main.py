@@ -12,22 +12,25 @@ _logger = logging.getLogger(__name__)
 class FacebookCatalogController(http.Controller):
 
     @http.route('/facebook_catalog_feed', auth='public', method=["GET"], sitemap=False)
-    def feed(self):
-        _logger.info("Faceboock catalog feed hit")
-        # Filter products
-        pt = request.env["product.template"].search([
+    def facebook_catalog_feed(self):
+        """ Publish the catalog to be available in the endpoint """
+        _logger.info("Facebook catalog feed hitted")
+        # Filter products with the necesary info
+        product_template_list = request.env["product.template"].search([
             ("active", "=", True),
             ("is_published", "=", True),
-            ("product_variant_count", "=", 1),
-            '|',
-            ("image_1024", "!=", False),
-            ("image_1920", "!=", False)
-            ])
+            ("sale_ok", "=", True),
+            ("available_in_facebook", "=", True),
+        ])
 
-        pp = request.env["product.product"].search([
-            ("product_tmpl_id", "in", pt.ids),
-            ("active", "=", True)
-            ])
+        product_list = request.env["product.product"].search([
+            ("product_tmpl_id", "in", product_template_list.ids),
+            ("active", "=", True),
+            '|',
+            '|',
+            ("product_tmpl_id.image_1920", "!=", False),
+            ("image_1920", "!=", False),
+        ])
 
         pricelist = request.website.get_current_pricelist()
         partner = request.env.user.partner_id
