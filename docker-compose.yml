@@ -1,0 +1,19 @@
+version: '3'
+services:
+  odoo:
+    image: guadalsistema/odoo:13
+    build: .
+    depends_on:
+      - db
+    ports:
+      - "8069:8069"
+    command: ["--dev=all"]
+    volumes:
+      - ./odoo:/etc/odoo:ro
+      - ./extra-addons:/mnt/extra-addons:ro
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_USER=odoo
